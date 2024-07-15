@@ -1,0 +1,39 @@
+[tool.poetry]
+name = "spotify-collector"
+version = "0.1.0"
+description = ""
+authors = ["Matheus Costa <matheeusferreeira@hotmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.12.*"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.5.2"
+taskipy = "^1.13.0"
+pytest = "^8.2.2"
+pytest-cov = "^5.0.0"
+
+[tool.ruff]
+line-length = 79
+
+[tool.ruff.lint]
+preview = true
+select = ["I", "F", "E", "W", "PL", "PT"]
+
+[tool.ruff.format]
+preview = true
+quote-style = "single"
+
+[tool.taskipy.tasks]
+run = "python spotify_collector/main.py"
+lint = "ruff check . ; ruff check . --diff"
+format = "ruff check . --fix ; ruff format ."
+pre_test = "task lint"
+test = "pytest --cov=spotify_collector -vv"
+post_test = "coverage html"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
